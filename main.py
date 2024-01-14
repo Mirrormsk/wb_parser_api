@@ -1,5 +1,4 @@
 import os
-import random
 from sqlite3 import OperationalError
 
 from fastapi import FastAPI
@@ -30,7 +29,10 @@ async def login(phone: PhoneSchema):
         )
         try:
             if not client.is_connected():
-                await client.connect()
+                try:
+                    await client.connect()
+                except Exception as ex:
+                    return {"error": "Error with connecting to Telegram API"}
             qr_login = await client.qr_login()
 
         except OperationalError as ex:
@@ -60,7 +62,10 @@ async def check_login(phone: int):
                 settings.API_HASH,
             )
             if not client.is_connected():
-                await client.connect()
+                try:
+                    await client.connect()
+                except Exception as ex:
+                    return {"error": "Error with connecting to Telegram API"}
 
             is_authorized = await client.is_user_authorized()
             if not is_authorized:
@@ -102,15 +107,21 @@ async def get_messages(phone: int, uname: str):
             settings.API_ID,
             settings.API_HASH,
         )
+
         if not client.is_connected():
-            await client.connect()
+            try:
+                await client.connect()
+            except Exception as ex:
+                return {"error": "Error with connecting to Telegram API"}
 
         is_authorized = await client.is_user_authorized()
 
         if not is_authorized:
             return {"error": "User not authorized"}
-
-        messages: list[Message] = await client.get_messages(uname, limit=50)
+        try:
+            messages: list[Message] = await client.get_messages(uname, limit=50)
+        except Exception as ex:
+            return {"error": "Error with connecting to Telegram API"}
 
         messages_data = [{"message_text": message.message} for message in messages]
         client.disconnect()
