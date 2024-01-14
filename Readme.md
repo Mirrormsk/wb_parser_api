@@ -2,7 +2,21 @@
 
 Веб-сервис, состоящий из двух частей - Telegram-бота, и API.
 
+
+
 ## Установка
+
+### Переименуйте файл `.env.example` в `.env`, и укажите необходимые переменные.
+
+
+## Запуск через Docker
+
+```bash
+docker-compose up
+```
+
+## Запуск без Docker'а:
+
 Создание виртуального окружения:
 
 ```bash
@@ -12,6 +26,8 @@ python3 -m venv venv
 ```bash
 source venv/bin/activate
 ```
+
+
 
 Установка зависимостей:
 
@@ -35,11 +51,5 @@ make run-bot
 
 # Запуск web-api
 make run-web
-```
-
-## Запуск через Docker
-
-```bash
-docker-compose up
 ```
 
