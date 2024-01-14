@@ -269,4 +269,4 @@ cython_debug/
 media/*
 user_sessions/*
 *.session
-
+database.db
