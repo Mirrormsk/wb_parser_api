@@ -19,7 +19,6 @@ async def echo(event):
     raw_results = wb_parser.parse_query(query)
     normalized_results = wb_parser.normalize_results(raw_results)
     text = '\n\n'.join(normalized_results)
-    print(text)
     await event.respond(text)
 
 
