@@ -44,7 +44,7 @@ async def login(phone: PhoneSchema):
         session.add(user)
         await session.commit()
 
-        return {"qr_link_url": "http://127.0.0.1:8000/qr/" + str(qr_id)}
+        return {"qr_link_url": f"{settings.HOST_NAME}/qr/" + str(qr_id)}
 
 
 @app.get("/check/login/")

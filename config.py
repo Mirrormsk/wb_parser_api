@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     BOT_TOKEN: str
     DB_URL: str
     DB_CREATE_URL: str
+    HOST_NAME: str
 
     class Config:
         env_file = ".env"
