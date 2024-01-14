@@ -12,6 +12,7 @@ from config import settings
 from schemas import PhoneSchema, SendMessageSchema
 from services import generate_qr
 from users_dao import UsersDao
+import uuid
 
 app = FastAPI()
 
@@ -37,7 +38,7 @@ async def login(phone: PhoneSchema):
         finally:
             await client.disconnect()
 
-        qr_id = random.randint(1000, 9999)
+        qr_id = uuid.uuid4()
         filename = f"media/{qr_id}.png"
         generate_qr(qr_login.url, filename)
         user.status = "waiting_qr_login"
@@ -79,7 +80,7 @@ async def check_login(phone: int):
 
 
 @app.get("/qr/{qr_id}/")
-async def get_qr(qr_id: int):
+async def get_qr(qr_id: str):
     """Returns qr-code as picture"""
     path = f"media/{qr_id}.png"
     if not os.path.exists(path):
