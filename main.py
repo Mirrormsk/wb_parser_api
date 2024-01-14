@@ -82,6 +82,8 @@ async def check_login(phone: int):
 async def get_qr(qr_id: int):
     """Returns qr-code as picture"""
     path = f"media/{qr_id}.png"
+    if not os.path.exists(path):
+        return {"error": "qr-code not found"}
     return FileResponse(path)
 
 
